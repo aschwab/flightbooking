@@ -1,0 +1,19 @@
+<header>
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+  >
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/']">FlightBooking</a>
+      <div class="full-height" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="2%">
+        <button *ngIf="!isAuthorized()" routerLink="/login" mat-mini-fab matTooltip="Login" color="primary">
+          <mat-icon>person</mat-icon>
+        </button>
+        <h5 fxFlex fxFlexAlign="bottom" *ngIf="isAuthorized() && customer">{{customer.firstName}}</h5>
+        <h5 fxFlex fxFlexAlign="bottom" *ngIf="isAuthorized() && customer">{{customer.lastName}}</h5>
+        <button *ngIf="isAuthorized()" (click)="logout()" mat-mini-fab matTooltip="Logout" color="primary">
+          <mat-icon>power_settings_new</mat-icon>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>

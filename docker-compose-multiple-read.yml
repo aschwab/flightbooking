@@ -1,0 +1,64 @@
+version: '3.4'
+
+services:      
+  fbs.booking.write.api:
+    image: ${DOCKER_REGISTRY-}fbsbookingwrite
+    build:
+      context: .
+      dockerfile: src/Application/FBS.Booking.Write.API/Dockerfile
+    depends_on:
+      - event.store
+
+  fbs.booking.read.api.first:
+    image: ${DOCKER_REGISTRY-}fbsbookingreadfirst
+    build:
+      context: .
+      dockerfile: src/Application/FBS.Booking.Read.API/Dockerfile
+    depends_on:
+      - event.store
+
+  fbs.booking.read.api.second:
+    image: ${DOCKER_REGISTRY-}fbsbookingreadsecond
+    build:
+      context: .
+      dockerfile: src/Application/FBS.Booking.Read.API/Dockerfile
+    depends_on:
+      - event.store
+
+  fbs.flightcontrol.api:
+    image: ${DOCKER_REGISTRY-}fbsflightcontrol
+    build:
+      context: .
+      dockerfile: src/Application/FBS.FlightControl.API/Dockerfile
+
+  fbs.customer.api:
+    image: ${DOCKER_REGISTRY-}fbscustomer
+    build:
+      context: .
+      dockerfile: src/Application/FBS.Customer.API/Dockerfile
+
+  fbs.authorization.api:
+    image: ${DOCKER_REGISTRY-}fbsauthorization
+    build:
+      context: .
+      dockerfile: src/Application/FBS.Authorization.API/Dockerfile
+
+
+  fbs.webapplication:
+    image: ${DOCKER_REGISTRY-}fbswebapplication
+    build:
+      context: .
+      dockerfile: src/Ui/FBS.WebApplication/Dockerfile
+    depends_on:
+      - fbs.booking.read.api.first
+      - fbs.booking.read.api.second
+      - fbs.booking.write.api
+      - fbs.flightcontrol.api
+      - fbs.customer.api
+      - fbs.authorization.api
+
+  event.store:
+    image: eventstore/eventstore
+    ports:
+      - "2113:2113"
+      - "1113:1113"    

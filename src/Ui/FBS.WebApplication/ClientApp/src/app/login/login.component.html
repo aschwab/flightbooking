@@ -1,0 +1,33 @@
+
+<div fxLayout="column" fxLayoutAlign="start center">
+    <div fxFlex="70" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="2%">
+        <mat-card fxFlex>
+            <mat-card-title>Login</mat-card-title>
+            <mat-card-content>Please provide Username and Password to log in!</mat-card-content>
+        </mat-card>
+        <mat-card fxFlex>
+            <mat-card-title>Login</mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="form" (ngSubmit)="submit()" fxLayout="column">
+                <mat-form-field fxFlex>
+                    <input type="text" matInput placeholder="Username" formControlName="username">
+                </mat-form-field>
+
+                <mat-form-field fxFlex>
+                    <input type="password" matInput placeholder="Password" formControlName="password">
+                </mat-form-field>
+
+                <p *ngIf="error" class="error" fxFlex>
+                {{ error }}
+                </p>
+
+                <div class="button" fxFlex>
+                    <button type="submit" mat-button>Login</button>
+                </div>
+
+                </form>
+            </mat-card-content>
+
+        </mat-card>
+    </div>
+</div>

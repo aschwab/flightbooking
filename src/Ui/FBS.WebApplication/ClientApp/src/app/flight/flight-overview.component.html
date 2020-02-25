@@ -1,0 +1,60 @@
+<div fxLayout="column" fxLayoutAlign="start center">
+  <div fxFlex="70" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="2%">
+    <mat-card>
+      <mat-card-title>Booking Flights made easy!</mat-card-title>
+      <mat-card-content>
+        <p>Welcome to the Flight-Booking system, you may choose a flight from the list!</p>
+      </mat-card-content>
+      <mat-divider *ngIf="(flights == undefined || flights.length === 0)"></mat-divider>
+      <mat-card-footer *ngIf="(flights == undefined || flights.length === 0)" fxLayout="row" fxLayoutAlign="end center"
+        fxLayout="column" fxLayoutAlign="start end">
+        <button fxFlex="nogrow"  (click)="releaseFlights()" mat-button routerLink="." color="accent">Release</button>
+        <mat-progress-bar color="primary" mode="determinate" [value]="progressValue"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+    
+    <mat-card *ngFor="let flight of flights" fxFlex="noshrink">
+      <mat-card-title>Flight #{{flight.number}}</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="space-around stretch">
+          <div fxFlexOffset="10px" fxLayout="row" fxFlex fxLayoutAlign="start center" fxLayoutGap="2%">   
+            <mat-icon fxFlex="nogrow">today</mat-icon>
+            <label fxFlex="nogrow" matTooltip="Departure Date">{{flight.date | date: 'dd.MM.yyyy'}}</label>
+            <mat-chip-list fxFlex="nogrow" matTooltip="From">
+              <mat-chip color="primary" selected><mat-icon>flight_takeoff</mat-icon>{{flight.from.code}}</mat-chip>
+            </mat-chip-list>
+            <label fxFlex matTooltip="From">{{flight.from.name}}</label>
+            <mat-icon fxFlex="nogrow">double_arrow</mat-icon>
+            <mat-chip-list fxFlex="nogrow" matTooltip="To">
+              <mat-chip color="primary" selected><mat-icon>flight_land</mat-icon>{{flight.to.code}}</mat-chip>
+            </mat-chip-list>
+            <label fxFlex fxFlexAlign="start" matTooltip="To">{{flight.to.name}}</label>
+          </div>
+          <mat-divider fxFlex="nogrow" fxFlexOffset="10px"></mat-divider>
+          <!-- Details -->
+          <div fxFlex fxFlexOffset="10px" fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="5%">
+              <mat-icon fxFlex="nogrow" matTooltip="Departure">flight_takeoff</mat-icon>
+              <label fxFlex="nogrow" matTooltip="Departure">{{flight.date | date: 'HH:mm'}}</label>
+              <mat-icon fxFlex="nogrow" matTooltip="Arrival">flight_land</mat-icon>
+              <label fxFlex="nogrow" matTooltip="Arrival">{{flight.arrival | date: 'HH:mm'}}</label>
+              <mat-icon fxFlex="nogrow" matTooltip="Plane">flight</mat-icon>
+              <label fxFlex="nogrow" matTooltip="Plane">{{flight.planeModel}}</label>
+              <mat-icon fxFlex="nogrow" matTooltip="Gate">exit_to_app</mat-icon>
+              <label fxFlex="nogrow" matTooltip="Gate">{{flight.gate}}</label>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+  
+      <mat-card-footer>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2%">
+          <a fxFlex="nogrow" mat-button routerLink="/flight/{{flight.id}}" color="primary">Details</a>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>
